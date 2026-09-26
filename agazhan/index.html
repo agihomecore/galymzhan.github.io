@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agazhan — ИИ-агент для агентств недвижимости</title>
+<meta name="description" content="Agazhan отвечает на заявки клиентов за секунды, днём и ночью, собирает бюджет, район и телефон и передаёт готовый лид агенту.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230A0A0B'/%3E%3Ctext x='50' y='70' font-size='60' text-anchor='middle' fill='%23C9A227' font-family='serif'%3EA%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Geologica:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--gold:#C9A227;--gold-light:#E8D48A;--dark:#0A0A0B;--dark2:#141416;--dark3:#1A1A1D;--text:#E8E6E3;--muted:#8A8A8A;--red:#D9534F;--green:#4CAF50}
+html{scroll-behavior:smooth}
+body{font-family:'Geologica',sans-serif;background:var(--dark);color:var(--text);min-height:100vh;overflow-x:hidden;line-height:1.6}
+.bg{position:fixed;inset:0;opacity:.03;pointer-events:none;z-index:0;background-image:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5L35 15L45 15L37.5 22.5L40 32.5L30 27.5L20 32.5L22.5 22.5L15 15L25 15L30 5Z' fill='none' stroke='%23C9A227' stroke-width='0.5'/%3E%3C/svg%3E")}
+.glow{position:fixed;top:25%;left:50%;transform:translate(-50%,-50%);width:640px;height:640px;max-width:100vw;background:radial-gradient(circle,rgba(201,162,39,.07) 0%,transparent 70%);pointer-events:none;z-index:0}
+.wrap{max-width:960px;margin:0 auto;padding:0 16px;position:relative;z-index:1}
+section{padding:3.5rem 0}
+.ornament{width:60px;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:0 auto 1.5rem;position:relative}
+.ornament::before{content:'◇';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:var(--gold);font-size:.6rem;background:var(--dark);padding:0 8px}
+.hero{text-align:center;padding:4rem 0 2rem}
+.name{font-family:'Cormorant Garamond',serif;font-size:clamp(2.6rem,8vw,4.2rem);font-weight:500;letter-spacing:.15em}
+.meaning{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold);letter-spacing:.15em;font-size:clamp(1rem,2.5vw,1.2rem);margin-bottom:1.6rem}
+.hero h2{font-weight:400;font-size:clamp(1.35rem,3.6vw,2rem);max-width:720px;margin:0 auto .9rem;line-height:1.35}
+.hero p.lead{color:var(--muted);max-width:620px;margin:0 auto 2rem;font-weight:300}
+.btn{display:inline-block;background:var(--gold);color:var(--dark);text-decoration:none;font-weight:500;padding:.9rem 1.8rem;border-radius:6px;border:none;cursor:pointer;font-family:inherit;font-size:1rem;transition:background .2s}
+.btn:hover{background:var(--gold-light)}
+.btn.ghost{background:transparent;color:var(--gold);border:1px solid rgba(201,162,39,.4);margin-left:.6rem}
+.btn.ghost:hover{background:rgba(201,162,39,.1)}
+h3.sec{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(1.7rem,4.5vw,2.3rem);text-align:center;margin-bottom:.4rem;letter-spacing:.04em}
+p.sub{text-align:center;color:var(--muted);margin:0 auto 2.2rem;max-width:620px;font-weight:300}
+
+/* night feed */
+.night{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.col{background:var(--dark2);border:1px solid rgba(201,162,39,.15);border-radius:8px;overflow:hidden}
+.col-h{padding:.8rem 1.2rem;border-bottom:1px solid rgba(201,162,39,.15);font-size:.9rem;display:flex;justify-content:space-between;align-items:center}
+.col-h.bad{background:rgba(217,83,79,.08)}.col-h.good{background:rgba(201,162,39,.1)}
+.tag{font-size:.75rem;padding:.15rem .6rem;border-radius:20px}
+.tag.bad{background:rgba(217,83,79,.15);color:#f0a09d}.tag.good{background:rgba(76,175,80,.15);color:#9bd69e}
+.feed{padding:1rem 1.2rem;display:flex;flex-direction:column;gap:.7rem;min-height:300px}
+.item{font-size:.86rem;padding:.65rem .8rem;border-radius:6px;background:var(--dark3);border-left:3px solid var(--muted);opacity:0;transform:translateY(6px);transition:all .4s}
+.item.show{opacity:1;transform:none}
+.item .t{color:var(--muted);font-size:.75rem;display:block}
+.item.lost{border-left-color:var(--red)}.item.ok{border-left-color:var(--green)}
+.item .st{display:block;font-size:.78rem;margin-top:.25rem}
+.item.lost .st{color:#f0a09d}.item.ok .st{color:#9bd69e}
+.note{text-align:center;color:var(--muted);font-size:.8rem;margin-top:1rem}
+
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+.step{background:var(--dark2);border:1px solid rgba(201,162,39,.12);border-radius:8px;padding:1.3rem}
+.step .n{font-family:'Cormorant Garamond',serif;color:var(--gold);font-size:1.8rem;line-height:1}
+.step h4{font-weight:500;margin:.5rem 0 .35rem;font-size:1rem}
+.step p{color:var(--muted);font-size:.87rem;font-weight:300}
+
+/* chat */
+.chat{max-width:760px;margin:0 auto;background:var(--dark2);border:1px solid rgba(201,162,39,.15);border-radius:8px;overflow:hidden}
+.chat-h{background:rgba(201,162,39,.1);padding:.9rem 1.3rem;border-bottom:1px solid rgba(201,162,39,.15);display:flex;align-items:center;gap:.7rem}
+.dot{width:10px;height:10px;background:var(--green);border-radius:50%;animation:pulse 2s ease-in-out infinite;flex-shrink:0}
+.chat-h .tx{font-size:.9rem;flex:1}.chat-h .tx span{color:var(--muted);font-size:.8rem}
+.clear{background:transparent;border:1px solid rgba(201,162,39,.3);color:var(--muted);font-family:inherit;font-size:.75rem;padding:.3rem .7rem;border-radius:4px;cursor:pointer}
+.clear:hover{color:var(--gold);border-color:var(--gold)}
+.msgs{height:380px;overflow-y:auto;padding:1.3rem;display:flex;flex-direction:column;gap:.9rem}
+.m{max-width:85%;padding:.85rem 1.1rem;border-radius:12px;font-size:.93rem;animation:fade .3s ease;word-wrap:break-word}
+.m.bot{background:var(--dark3);border:1px solid rgba(201,162,39,.1);align-self:flex-start;border-bottom-left-radius:4px}
+.m.user{background:rgba(201,162,39,.15);align-self:flex-end;border-bottom-right-radius:4px}
+.dots{display:flex;gap:4px;padding:4px 0}.dots span{width:6px;height:6px;background:var(--gold);border-radius:50%;animation:td 1.2s infinite}
+.dots span:nth-child(2){animation-delay:.2s}.dots span:nth-child(3){animation-delay:.4s}
+.presets{display:flex;flex-wrap:wrap;gap:.5rem;padding:0 1.3rem 1rem}
+.preset{background:transparent;border:1px solid rgba(201,162,39,.25);color:var(--text);font-family:inherit;font-size:.8rem;padding:.4rem .8rem;border-radius:20px;cursor:pointer}
+.preset:hover{border-color:var(--gold);color:var(--gold)}
+.in{display:flex;gap:.7rem;padding:1rem 1.3rem;border-top:1px solid rgba(201,162,39,.1)}
+.in input{flex:1;min-width:0;background:var(--dark);border:1px solid rgba(201,162,39,.2);border-radius:6px;padding:.8rem 1rem;color:var(--text);font-family:inherit;font-size:.95rem;outline:none}
+.in input:focus{border-color:var(--gold)}
+.in button{background:var(--gold);color:var(--dark);border:none;border-radius:6px;padding:0 1.3rem;font-family:inherit;font-weight:500;cursor:pointer}
+.in button:disabled{opacity:.5;cursor:not-allowed}
+.lead-card{border:1px solid rgba(76,175,80,.35)!important;background:rgba(76,175,80,.07)!important}
+.lead-card b{color:#9bd69e;font-weight:500}
+
+/* for whom */
+.who{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.who div{background:var(--dark2);border:1px solid rgba(201,162,39,.12);border-radius:8px;padding:1.3rem}
+.who h4{font-weight:500;margin-bottom:.4rem;color:var(--gold-light)}
+.who p{color:var(--muted);font-size:.88rem;font-weight:300}
+
+.cta{text-align:center;background:linear-gradient(180deg,transparent,rgba(201,162,39,.06));border-top:1px solid rgba(201,162,39,.1)}
+.cta p{color:var(--muted);max-width:560px;margin:0 auto 1.6rem;font-weight:300}
+footer{text-align:center;padding:2rem 0 2.5rem;color:var(--muted);font-size:.82rem;position:relative;z-index:1}
+footer a{color:var(--gold);text-decoration:none}
+
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+@keyframes td{0%,60%,100%{transform:translateY(0);opacity:.4}30%{transform:translateY(-4px);opacity:1}}
+@media(max-width:760px){.night,.who{grid-template-columns:1fr}.steps{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.steps{grid-template-columns:1fr}.btn.ghost{margin:.7rem 0 0}.msgs{height:340px}.in{flex-direction:column}.in button{padding:.8rem}}
+</style>
+</head>
+<body>
+<div class="bg"></div><div class="glow"></div>
+
+<div class="wrap">
+  <header class="hero">
+    <div class="ornament"></div>
+    <h1 class="name">AGAZHAN</h1>
+    <p class="meaning">ИИ-агент для агентств недвижимости</p>
+    <h2>Ни одна заявка не остаётся без ответа — ни ночью, ни в выходные, ни когда агент на показе</h2>
+    <p class="lead">Agazhan отвечает клиенту за секунды, выясняет бюджет, район и сроки, берёт телефон и передаёт агенту готовый лид, а не «здравствуйте, интересует квартира».</p>
+    <a class="btn" href="#demo">Попробовать сейчас</a><a class="btn ghost" href="#pilot">Обсудить пилот</a>
+  </header>
+</div>
+
+<section>
+  <div class="wrap">
+    <h3 class="sec">Одна ночь в агентстве</h3>
+    <p class="sub">Заявки приходят, когда им удобно, а не когда агенты на смене.</p>
+    <div class="night">
+      <div class="col">
+        <div class="col-h bad">Без Agazhan <span class="tag bad" id="lostCnt">потеряно: 0</span></div>
+        <div class="feed" id="feedA"></div>
+      </div>
+      <div class="col">
+        <div class="col-h good">С Agazhan <span class="tag good" id="okCnt">в работе: 0</span></div>
+        <div class="feed" id="feedB"></div>
+      </div>
+    </div>
+    <p class="note">Иллюстрация: типичные ночные заявки. Цифры для вашего агентства посчитаем на пилоте по реальной CRM.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h3 class="sec">Как это работает</h3>
+    <p class="sub">Подключается к вашим каналам, а не заставляет менять процессы.</p>
+    <div class="steps">
+      <div class="step"><div class="n">1</div><h4>Клиент пишет</h4><p>Сайт, WhatsApp, Telegram, Instagram, Krisha — заявка из любого канала.</p></div>
+      <div class="step"><div class="n">2</div><h4>Ответ за секунды</h4><p>Agazhan отвечает по вашей базе объектов и условиям агентства.</p></div>
+      <div class="step"><div class="n">3</div><h4>Квалификация</h4><p>Бюджет, комнаты, район, ипотека, сроки, телефон — без анкет, в диалоге.</p></div>
+      <div class="step"><div class="n">4</div><h4>Лид агенту</h4><p>Карточка уходит свободному агенту в CRM или Telegram, с историей переписки.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="demo">
+  <div class="wrap">
+    <h3 class="sec">Напишите как клиент</h3>
+    <p class="sub">Живой ИИ, не заготовки. Представьте, что сейчас 02:40 ночи и вы ищете квартиру.</p>
+    <div class="chat">
+      <div class="chat-h"><div class="dot"></div><div class="tx">Agazhan онлайн <span>• демо-агентство, Астана</span></div><button class="clear" id="clear">Новый чат</button></div>
+      <div class="msgs" id="msgs"></div>
+      <div class="presets" id="presets">
+        <button class="preset">Ищу двушку в Есиле до 35 млн</button>
+        <button class="preset">Можно в ипотеку «Отбасы»?</button>
+        <button class="preset">Какая у вас комиссия?</button>
+        <button class="preset">Хочу продать квартиру</button>
+      </div>
+      <div class="in"><input id="inp" type="text" placeholder="Напишите вопрос..." autocomplete="off"><button id="send">Отправить</button></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h3 class="sec">Для кого</h3>
+    <p class="sub">&nbsp;</p>
+    <div class="who">
+      <div><h4>Сети и франшизы</h4><p>Единый стандарт первого ответа во всех городах и офисах, независимо от того, кто сегодня на смене.</p></div>
+      <div><h4>Агентства в росте</h4><p>Штат растёт, заявок больше, а РОП не успевает распределять. Agazhan снимает первую линию.</p></div>
+      <div><h4>Застройщики</h4><p>Отдел продаж ЖК получает квалифицированных покупателей, а не холодные «сколько стоит».</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="cta" id="pilot">
+  <div class="wrap">
+    <h3 class="sec">Пилот на 30 дней</h3>
+    <p>Подключаем один канал и одну команду. Через месяц сравниваем: сколько заявок пришло вне рабочего времени, сколько дошло до показа. В рабочей версии модель и данные можно держать на нашем сервере в Казахстане.</p>
+    <a class="btn" href="mailto:agazhan.com@gmail.com?subject=Agazhan%20—%20пилот">Обсудить пилот</a>
+  </div>
+</section>
+
+<footer>
+  Agazhan — продукт <a href="https://galymzhan.com">Galymzhan</a> · ИП SUN · Астана<br>
+  <a href="mailto:agazhan.com@gmail.com">agazhan.com@gmail.com</a>
+</footer>
+
+<script>
+/* ===== НОЧНАЯ ЛЕНТА ===== */
+var leads=[
+ {t:'23:14',q:'Двушка в Есиле, бюджет 32 млн'},
+ {t:'00:47',q:'Можно ли посмотреть ЖК на Туран завтра?'},
+ {t:'01:32',q:'Продаю 3-комн., сколько возьмёте комиссию?'},
+ {t:'03:05',q:'Срочно нужна аренда, переезд через неделю'},
+ {t:'06:20',q:'Ипотека «Отбасы», первый взнос 20%'}
+];
+var fA=document.getElementById('feedA'),fB=document.getElementById('feedB'),lost=0,ok=0;
+function addItem(feed,l,good){
+  var d=document.createElement('div');d.className='item '+(good?'ok':'lost');
+  d.innerHTML='<span class="t">'+l.t+'</span>'+l.q+'<span class="st">'+(good?'✓ ответ за 4 сек · телефон получен · передано агенту':'✕ без ответа до 09:00 · клиент написал конкуренту')+'</span>';
+  feed.appendChild(d);requestAnimationFrame(function(){requestAnimationFrame(function(){d.classList.add('show')})});
+}
+function runFeed(){
+  fA.innerHTML='';fB.innerHTML='';lost=0;ok=0;updCnt();
+  leads.forEach(function(l,i){setTimeout(function(){
+    addItem(fA,l,false);lost++;addItem(fB,l,true);ok++;updCnt();
+  },700+i*1100)});
+  setTimeout(runFeed,700+leads.length*1100+6000);
+}
+function updCnt(){document.getElementById('lostCnt').textContent='потеряно: '+lost;document.getElementById('okCnt').textContent='в работе: '+ok}
+var fed=false,io=('IntersectionObserver' in window)?new IntersectionObserver(function(e){if(e[0].isIntersecting&&!fed){fed=true;runFeed()}},{threshold:.3}):null;
+if(io)io.observe(fA);else runFeed();
+
+/* ===== ЧАТ ===== */
+var API_URL='https://galymzhan-api.notebookastana.workers.dev/';
+var MODEL='openai/gpt-oss-120b';
+var MAX_CONTEXT=20;
+var SYSTEM_PROMPT=`Ты — Agazhan, ИИ-ассистент агентства недвижимости в Астане. Ты отвечаешь клиентам в чате сайта круглосуточно, пока агенты заняты или спят.
+
+ЗАДАЧА: вежливо и быстро ответить, помочь, и в естественном диалоге собрать данные для агента:
+1) что нужно: купить / продать / аренда
+2) тип и комнатность
+3) район или ЖК
+4) бюджет
+5) способ оплаты (наличные, ипотека — какая программа)
+6) сроки
+7) имя и телефон
+
+ПРАВИЛА:
+- Пиши коротко: 2–4 предложения. Один вопрос за раз, не анкетой.
+- Обращайся на «вы», тепло и по-деловому.
+- Это демо-агентство: у тебя нет реальной базы объектов. Не выдумывай конкретные адреса, цены объектов и наличие. Говори в общем («в Есиле двушки в новостройках сейчас обычно в диапазоне…» можно только если уверен, иначе предложи, что агент подберёт варианты).
+- Комиссия и условия: скажи, что их точно назовёт агент, условия зависят от сделки.
+- Ипотеку объясняй в общих чертах, без обещаний одобрения.
+- Когда собраны хотя бы потребность, бюджет и телефон — поблагодари и скажи, что агент свяжется утром или в ближайшее время. В САМОМ КОНЦЕ такого сообщения добавь отдельной строкой служебный блок строго в формате:
+[ЛИД] Запрос: ... | Район: ... | Бюджет: ... | Оплата: ... | Сроки: ... | Имя: ... | Телефон: ...
+(неизвестные поля — «—»). Блок добавляй только один раз.
+- Отвечай на языке клиента: русский или казахский. Только кириллица и латиница, без иероглифов.`;
+
+var hist=[],msgs=document.getElementById('msgs'),inp=document.getElementById('inp'),sendB=document.getElementById('send');
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function add(text,user){
+  var d=document.createElement('div');d.className='m '+(user?'user':'bot');
+  var lead=null;
+  if(!user){var mm=text.match(/\[ЛИД\]([\s\S]*)$/);if(mm){lead=mm[1].trim();text=text.replace(/\[ЛИД\][\s\S]*$/,'').trim()}}
+  d.innerHTML=esc(text).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>').replace(/\n/g,'<br>');
+  msgs.appendChild(d);
+  if(lead){var c=document.createElement('div');c.className='m bot lead-card';
+    c.innerHTML='<b>📋 Карточка лида → агенту</b><br>'+esc(lead).split('|').map(function(x){return x.trim()}).join('<br>');msgs.appendChild(c)}
+  msgs.scrollTop=msgs.scrollHeight;
+}
+function greet(){add('Здравствуйте! Я Agazhan, ассистент агентства. Агенты сейчас отдыхают, но я помогу прямо сейчас. Вы ищете, продаёте или хотите арендовать?')}
+function typing(on){var t=document.getElementById('typ');if(on&&!t){t=document.createElement('div');t.id='typ';t.className='m bot';t.innerHTML='<div class="dots"><span></span><span></span><span></span></div>';msgs.appendChild(t);msgs.scrollTop=msgs.scrollHeight}else if(!on&&t)t.remove()}
+async function ask(q){
+  hist.push({role:'user',content:q});
+  try{
+    var r=await fetch(API_URL,{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({model:MODEL,messages:[{role:'system',content:SYSTEM_PROMPT}].concat(hist.slice(-MAX_CONTEXT)),temperature:0.5,max_tokens:1024})});
+    if(!r.ok)throw new Error(r.status);
+    var d=await r.json(),a=(d.choices&&d.choices[0].message.content||'').trim();
+    if(!a)throw new Error('empty');
+    hist.push({role:'assistant',content:a});return a;
+  }catch(e){hist.pop();return 'Извините, связь на секунду прервалась. Повторите, пожалуйста, сообщение.'}
+}
+async function send(text){
+  text=(text||inp.value).trim();if(!text||sendB.disabled)return;
+  document.getElementById('presets').style.display='none';
+  add(text,true);inp.value='';sendB.disabled=true;typing(true);
+  var a=await ask(text);typing(false);add(a,false);sendB.disabled=false;
+}
+sendB.onclick=function(){send()};
+inp.addEventListener('keydown',function(e){if(e.key==='Enter')send()});
+document.querySelectorAll('.preset').forEach(function(b){b.onclick=function(){send(b.textContent)}});
+document.getElementById('clear').onclick=function(){hist=[];msgs.innerHTML='';document.getElementById('presets').style.display='';greet()};
+greet();
+</script>
+</body>
+</html>
