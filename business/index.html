@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Galymzhan для бизнеса — локальный ИИ от ИП SUN</title>
+<meta name="description" content="Локальный искусственный интеллект для бизнеса, школ и агентств Казахстана: SunSchool, SUNSTICK, Agazhan. Данные остаются у вас, модели работают на наших серверах в Астане или на вашем компьютере.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230A0A0B'/%3E%3Ctext x='50' y='70' font-size='60' text-anchor='middle' fill='%23C9A227' font-family='serif'%3EG%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Geologica:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--gold:#C9A227;--gold-light:#E8D48A;--dark:#0A0A0B;--dark2:#141416;--dark3:#1A1A1D;--line:#2a2a2e;--text:#E8E6E3;--muted:#8A8A8A;--ok:#7fc79a}
+body{font-family:'Geologica',system-ui,sans-serif;background:var(--dark);color:var(--text);line-height:1.6;font-weight:300;overflow-x:hidden}
+a{color:var(--gold-light)}
+.glow{position:fixed;top:-200px;right:-200px;width:620px;height:620px;background:radial-gradient(circle,rgba(201,162,39,.09) 0%,transparent 70%);pointer-events:none;z-index:0}
+.w{position:relative;z-index:1;max-width:1040px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left));padding-right:max(20px,env(safe-area-inset-right))}
+header{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-block:22px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.logo{font-family:'Cormorant Garamond',serif;font-size:24px;letter-spacing:.18em;color:var(--gold);text-decoration:none;font-weight:600}
+nav{display:flex;gap:20px;flex-wrap:wrap;font-size:14px}
+nav a{color:var(--muted);text-decoration:none}nav a:hover{color:var(--text)}
+.hero{padding-block:72px 56px;display:grid;gap:20px;max-width:760px}
+.eyebrow{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+h1{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(38px,6vw,64px);line-height:1.05;text-wrap:balance}
+.lead{font-size:19px;color:#c9c6c2;max-width:60ch}
+.points{display:flex;flex-wrap:wrap;gap:10px 22px;font-size:15px;color:var(--muted)}
+.points b{color:var(--gold-light);font-weight:500}
+.btns{display:flex;gap:12px;flex-wrap:wrap;margin-top:6px}
+.btn{display:inline-block;padding:13px 22px;border-radius:999px;text-decoration:none;font-weight:500;border:1px solid var(--line);color:var(--text)}
+.btn.gold{background:var(--gold);color:#140f00;border-color:var(--gold)}
+section{padding-block:56px;border-top:1px solid var(--line)}
+h2{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:36px;line-height:1.15;margin-bottom:8px}
+.sub{color:var(--muted);max-width:62ch;margin-bottom:28px}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.card{background:var(--dark2);border:1px solid var(--line);border-radius:16px;padding:24px;display:grid;gap:12px;align-content:start;min-width:0}
+.card h3{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:600;color:var(--gold-light)}
+.card .who{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.card ul{padding-left:18px;color:#c9c6c2;font-size:15px;display:grid;gap:4px}
+.price{font-family:'Cormorant Garamond',serif;font-size:30px;color:var(--text)}
+.price small{font-family:'Geologica',sans-serif;font-size:13px;color:var(--muted)}
+.tag{justify-self:start;font-size:12px;padding:4px 10px;border-radius:999px;border:1px solid var(--line);color:var(--muted)}
+.tag.ok{color:var(--ok);border-color:rgba(127,199,154,.35)}.tag.gold{color:var(--gold-light);border-color:rgba(201,162,39,.45)}
+.card a.more{font-size:15px}
+.steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;counter-reset:s}
+.step{border-top:1px solid var(--gold);padding-top:14px;display:grid;gap:6px}
+.step::before{counter-increment:s;content:"0" counter(s);font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--gold)}
+.step p{color:var(--muted);font-size:15px}
+.why{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.why div{background:var(--dark2);border:1px solid var(--line);border-radius:14px;padding:20px}
+.why b{display:block;font-weight:500;margin-bottom:4px}
+.why p{color:var(--muted);font-size:15px}
+.contact{background:linear-gradient(135deg,rgba(201,162,39,.12),transparent 60%);border:1px solid rgba(201,162,39,.35);border-radius:18px;padding:32px;display:grid;gap:14px}
+.mail{font-size:20px;user-select:all;color:var(--gold-light)}
+footer{border-top:1px solid var(--line);padding-block:26px;color:var(--muted);font-size:14px}
+footer .w{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+@media(max-width:860px){.cards{grid-template-columns:1fr}.steps{grid-template-columns:1fr 1fr}.why{grid-template-columns:1fr}}
+@media(max-width:480px){.steps{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="glow" aria-hidden="true"></div>
+<div class="w">
+<header>
+  <a class="logo" href="/">GALYMZHAN</a>
+  <nav><a href="#offers">Решения</a><a href="#how">Как работаем</a><a href="#contact">Связаться</a><a href="/">ИИ-наставник</a></nav>
+</header>
+
+<div class="hero">
+  <div class="eyebrow">Для бизнеса · школ · агентств</div>
+  <h1>Локальный искусственный интеллект, который остаётся у вас</h1>
+  <p class="lead">ИП SUN из Астаны ставит ИИ-помощников, которые работают на наших серверах в Казахстане или прямо на вашем компьютере. Данные клиентов и учеников никуда не уходят.</p>
+  <div class="points"><span><b>Казахстан</b> — серверы в Астане</span><span><b>Без облака</b> — можно офлайн</span><span><b>Казахский и русский</b></span></div>
+  <div class="btns"><a class="btn gold" href="#contact">Обсудить задачу</a><a class="btn" href="#offers">Посмотреть решения</a></div>
+</div>
+</div>
+
+<section id="offers"><div class="w">
+  <h2>Решения</h2>
+  <p class="sub">Начинаем с малого: пилот на одном отделе, одной школе или одной флешке. Масштабируем, когда видно пользу.</p>
+  <div class="cards">
+    <div class="card">
+      <span class="tag gold">пилот</span>
+      <div class="who">Школам и управлениям образования</div>
+      <h3>SunSchool</h3>
+      <ul><li>Помощник для учителей и администрации</li><li>Работает в контуре школы, данные учеников остаются внутри</li><li>Казахский и русский язык</li><li>Ежедневные сводки и подсказки по задачам</li></ul>
+      <div class="price">по запросу <small>пилот на договоре</small></div>
+    </div>
+    <div class="card">
+      <span class="tag gold">скоро в Kaspi</span>
+      <div class="who">Офисам и домашним пользователям</div>
+      <h3>SUNSTICK</h3>
+      <ul><li>ИИ-помощник Aisulu на флешке</li><li>Вставили в компьютер — работает без интернета</li><li>Свои документы, свой язык, ничего не уходит в сеть</li><li>Поддержка по подписке</li></ul>
+      <div class="price">200 000 ₸ <small>рассрочка Kaspi · поддержка 1 000 ₸/мес</small></div>
+    </div>
+    <div class="card">
+      <span class="tag ok">работает</span>
+      <div class="who">Агентствам недвижимости</div>
+      <h3>Agazhan</h3>
+      <ul><li>Отвечает на заявки за секунды, днём и ночью</li><li>Собирает бюджет, район и телефон</li><li>Передаёт готовый лид агенту</li></ul>
+      <a class="more" href="/agazhan/">Демо для агентств →</a>
+    </div>
+  </div>
+</div></section>
+
+<section id="partners"><div class="w">
+  <h2>Партнёрам</h2>
+  <p class="sub">Продавцы компьютеров и сборщики ПК: предустанавливаем Aisulu на ваши машины, вы продаёте компьютер, который умеет думать офлайн.</p>
+  <div class="cards">
+    <div class="card"><div class="who">Предустановка на ПК</div><div class="price">100 000 ₸ <small>за компьютер</small></div><ul><li>Модель и программа на диске</li><li>Проверка работы до продажи</li></ul></div>
+    <div class="card"><div class="who">Разработчикам</div><h3>SupremeLab</h3><ul><li>SunMCP — MCP-клиент для локальных моделей</li><li>Открытое ядро, MIT</li></ul><a class="more" href="https://supremelab.org" target="_blank" rel="noopener">supremelab.org →</a></div>
+    <div class="card"><div class="who">Своя модель</div><ul><li>Обучение под ваши документы и тон</li><li>Размещение на вашем сервере или у нас</li></ul><div class="price">по запросу</div></div>
+  </div>
+</div></section>
+
+<section id="how"><div class="w">
+  <h2>Как работаем</h2>
+  <p class="sub">Без лишних встреч и без обещаний, которые нельзя проверить.</p>
+  <div class="steps">
+    <div class="step"><b>Разговор</b><p>30 минут: какая задача, какие данные, кто будет пользоваться.</p></div>
+    <div class="step"><b>Демо</b><p>Показываем на вашем примере, офлайн, прямо на ноутбуке.</p></div>
+    <div class="step"><b>Пилот</b><p>Договор, один отдел или одна школа, понятный срок и результат.</p></div>
+    <div class="step"><b>Запуск</b><p>Ставим, обучаем людей, сопровождаем по подписке.</p></div>
+  </div>
+</div></section>
+
+<section><div class="w">
+  <h2>Почему локально</h2>
+  <div class="why">
+    <div><b>Данные остаются в стране</b><p>Модели работают на наших серверах в Астане или у вас. Персональные данные не уходят в зарубежные облака.</p></div>
+    <div><b>Работает без интернета</b><p>SUNSTICK и локальная установка не зависят от связи и внешних сервисов.</p></div>
+    <div><b>Предсказуемая цена</b><p>Нет счёта за каждый запрос. Платите за установку и поддержку.</p></div>
+    <div><b>Безопасность по умолчанию</b><p>ИИ не вводит пароли и не трогает банковские окна. Необратимые действия — только с подтверждения человека.</p></div>
+  </div>
+</div></section>
+
+<section id="contact"><div class="w">
+  <div class="contact">
+    <h2>Обсудим вашу задачу</h2>
+    <p class="sub" style="margin:0">Напишите, чем занимается ваша организация и что хотите поручить ИИ. Ответим в течение рабочего дня.</p>
+    <div class="mail">hello@galymzhan.com</div>
+  </div>
+</div></section>
+
+<footer><div class="w"><span>Galymzhan · ИП SUN · Астана, Казахстан · 2026</span><span><a href="/">ИИ-наставник</a> · <a href="https://supremelab.org" target="_blank" rel="noopener">SupremeLab</a></span></div></footer>
+</body>
+</html>
