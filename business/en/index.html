@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Galymzhan for business — local AI by IP SUN</title>
+<meta name="description" content="Local artificial intelligence for businesses, schools and agencies in Kazakhstan: SunSchool, SUNSTICK, Agazhan. Your data stays with you; models run on our servers in Astana or on your own computer.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230A0A0B'/%3E%3Ctext x='50' y='70' font-size='60' text-anchor='middle' fill='%23C9A227' font-family='serif'%3EG%3C/text%3E%3C/svg%3E">
+<link rel="alternate" hreflang="ru" href="https://galymzhan.com/business/">
+<link rel="alternate" hreflang="en" href="https://galymzhan.com/business/en/">
+<link rel="alternate" hreflang="kk" href="https://galymzhan.com/business/kk/">
+<link rel="alternate" hreflang="x-default" href="https://galymzhan.com/business/en/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Geologica:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--gold:#C9A227;--gold-light:#E8D48A;--dark:#0A0A0B;--dark2:#141416;--dark3:#1A1A1D;--line:#2a2a2e;--text:#E8E6E3;--muted:#8A8A8A;--ok:#7fc79a}
+body{font-family:'Geologica',system-ui,sans-serif;background:var(--dark);color:var(--text);line-height:1.6;font-weight:300;overflow-x:hidden}
+a{color:var(--gold-light)}
+.glow{position:fixed;top:-200px;right:-200px;width:620px;height:620px;background:radial-gradient(circle,rgba(201,162,39,.09) 0%,transparent 70%);pointer-events:none;z-index:0}
+.w{position:relative;z-index:1;max-width:1040px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left));padding-right:max(20px,env(safe-area-inset-right))}
+header{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-block:22px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.logo{font-family:'Cormorant Garamond',serif;font-size:24px;letter-spacing:.18em;color:var(--gold);text-decoration:none;font-weight:600}
+nav{display:flex;gap:20px;flex-wrap:wrap;font-size:14px}
+nav a{color:var(--muted);text-decoration:none}nav a:hover{color:var(--text)}
+.hero{padding-block:72px 56px;display:grid;gap:20px;max-width:760px}
+.eyebrow{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+h1{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(38px,6vw,64px);line-height:1.05;text-wrap:balance}
+.lead{font-size:19px;color:#c9c6c2;max-width:60ch}
+.points{display:flex;flex-wrap:wrap;gap:10px 22px;font-size:15px;color:var(--muted)}
+.points b{color:var(--gold-light);font-weight:500}
+.btns{display:flex;gap:12px;flex-wrap:wrap;margin-top:6px}
+.btn{display:inline-block;padding:13px 22px;border-radius:999px;text-decoration:none;font-weight:500;border:1px solid var(--line);color:var(--text)}
+.btn.gold{background:var(--gold);color:#140f00;border-color:var(--gold)}
+section{padding-block:56px;border-top:1px solid var(--line)}
+h2{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:36px;line-height:1.15;margin-bottom:8px}
+.sub{color:var(--muted);max-width:62ch;margin-bottom:28px}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.card{background:var(--dark2);border:1px solid var(--line);border-radius:16px;padding:24px;display:grid;gap:12px;align-content:start;min-width:0}
+.card h3{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:600;color:var(--gold-light)}
+.card .who{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.card ul{padding-left:18px;color:#c9c6c2;font-size:15px;display:grid;gap:4px}
+.price{font-family:'Cormorant Garamond',serif;font-size:30px;color:var(--text)}
+.price small{font-family:'Geologica',sans-serif;font-size:13px;color:var(--muted)}
+.tag{justify-self:start;font-size:12px;padding:4px 10px;border-radius:999px;border:1px solid var(--line);color:var(--muted)}
+.tag.ok{color:var(--ok);border-color:rgba(127,199,154,.35)}.tag.gold{color:var(--gold-light);border-color:rgba(201,162,39,.45)}
+.card a.more{font-size:15px}
+.steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;counter-reset:s}
+.step{border-top:1px solid var(--gold);padding-top:14px;display:grid;gap:6px}
+.step::before{counter-increment:s;content:"0" counter(s);font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--gold)}
+.step p{color:var(--muted);font-size:15px}
+.why{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.why div{background:var(--dark2);border:1px solid var(--line);border-radius:14px;padding:20px}
+.why b{display:block;font-weight:500;margin-bottom:4px}
+.why p{color:var(--muted);font-size:15px}
+.contact{background:linear-gradient(135deg,rgba(201,162,39,.12),transparent 60%);border:1px solid rgba(201,162,39,.35);border-radius:18px;padding:32px;display:grid;gap:14px}
+.mail{font-size:20px;user-select:all;color:var(--gold-light)}
+footer{border-top:1px solid var(--line);padding-block:26px;color:var(--muted);font-size:14px}
+footer .w{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+@media(max-width:860px){.cards{grid-template-columns:1fr}.steps{grid-template-columns:1fr 1fr}.why{grid-template-columns:1fr}}
+@media(max-width:480px){.steps{grid-template-columns:1fr}}
+.lang{display:flex;gap:6px}.lang a{font-size:12px;letter-spacing:.08em;padding:4px 9px;border:1px solid var(--line);border-radius:999px;color:var(--muted);text-decoration:none}.lang a.on{color:#140f00;background:var(--gold);border-color:var(--gold)}
+</style>
+</head>
+<body>
+<div class="glow" aria-hidden="true"></div>
+<div class="w">
+<header>
+  <a class="logo" href="/">GALYMZHAN</a>
+  <nav><a href="#offers">Solutions</a><a href="#how">How we work</a><a href="#contact">Contact</a><a href="/">AI mentor</a></nav><span class="lang"><a href="/business/" hreflang="ru">РУС</a><a href="/business/kk/" hreflang="kk">ҚАЗ</a><a href="/business/en/" class="on" hreflang="en">ENG</a></span>
+</header>
+
+<div class="hero">
+  <div class="eyebrow">For business · schools · agencies</div>
+  <h1>Local artificial intelligence that stays with you</h1>
+  <p class="lead">IP SUN from Astana sets up AI assistants that run on our servers in Kazakhstan or right on your computer. Customer and student data never leaves.</p>
+  <div class="points"><span><b>Kazakhstan</b> — servers in Astana</span><span><b>No cloud</b> — works offline</span><span><b>Kazakh and Russian</b></span></div>
+  <div class="btns"><a class="btn gold" href="#contact">Discuss your task</a><a class="btn" href="#offers">See solutions</a></div>
+</div>
+</div>
+
+<section id="offers"><div class="w">
+  <h2>Solutions</h2>
+  <p class="sub">We start small: a pilot in one department, one school or on one USB stick. We scale once the value is clear.</p>
+  <div class="cards">
+    <div class="card">
+      <span class="tag gold">pilot</span>
+      <div class="who">Schools and education departments</div>
+      <h3>SunSchool</h3>
+      <ul><li>An assistant for teachers and administration</li><li>Runs inside the school's network; student data stays inside</li><li>Kazakh and Russian</li><li>Daily summaries and task hints</li></ul>
+      <div class="price">on request <small>pilot under contract</small></div>
+    </div>
+    <div class="card">
+      <span class="tag gold">coming to Kaspi</span>
+      <div class="who">Offices and home users</div>
+      <h3>SUNSTICK</h3>
+      <ul><li>Aisulu AI assistant on a USB stick</li><li>Plug it in and it works without internet</li><li>Your documents, your language, nothing goes online</li><li>Support by subscription</li></ul>
+      <div class="price">200 000 ₸ <small>Kaspi instalments · support 1 000 ₸/month</small></div>
+    </div>
+    <div class="card">
+      <span class="tag ok">live</span>
+      <div class="who">Real-estate agencies</div>
+      <h3>Agazhan</h3>
+      <ul><li>Answers enquiries in seconds, day and night</li><li>Collects budget, district and phone number</li><li>Hands a ready lead to an agent</li></ul>
+      <a class="more" href="/agazhan/">Demo for agencies →</a>
+    </div>
+  </div>
+</div></section>
+
+<section id="partners"><div class="w">
+  <h2>Partners</h2>
+  <p class="sub">Computer sellers and PC builders: we pre-install Aisulu on your machines, and you sell a computer that thinks offline.</p>
+  <div class="cards">
+    <div class="card"><div class="who">Pre-install on PCs</div><div class="price">100 000 ₸ <small>per computer</small></div><ul><li>Model and app on the drive</li><li>Checked before sale</li></ul></div>
+    <div class="card"><div class="who">Developers</div><h3>SupremeLab</h3><ul><li>SunMCP — an MCP client for local models</li><li>Open core, MIT</li></ul><a class="more" href="https://supremelab.org" target="_blank" rel="noopener">supremelab.org →</a></div>
+    <div class="card"><div class="who">Your own model</div><ul><li>Trained on your documents and tone</li><li>Hosted on your server or ours</li></ul><div class="price">on request</div></div>
+  </div>
+</div></section>
+
+<section id="how"><div class="w">
+  <h2>How we work</h2>
+  <p class="sub">No extra meetings and no promises you can't check.</p>
+  <div class="steps">
+    <div class="step"><b>Call</b><p>30 minutes: the task, the data, who will use it.</p></div>
+    <div class="step"><b>Demo</b><p>We show it on your example, offline, right on a laptop.</p></div>
+    <div class="step"><b>Pilot</b><p>A contract, one department or one school, a clear timeline and result.</p></div>
+    <div class="step"><b>Launch</b><p>We install, train your people and support you by subscription.</p></div>
+  </div>
+</div></section>
+
+<section><div class="w">
+  <h2>Why local</h2>
+  <div class="why">
+    <div><b>Data stays in the country</b><p>Models run on our servers in Astana or at your site. Personal data does not go to foreign clouds.</p></div>
+    <div><b>Works without internet</b><p>SUNSTICK and on-site installs do not depend on connectivity or outside services.</p></div>
+    <div><b>Predictable price</b><p>No bill per request. You pay for installation and support.</p></div>
+    <div><b>Safe by default</b><p>The AI never types passwords or touches banking windows. Irreversible actions only with a person's confirmation.</p></div>
+  </div>
+</div></section>
+
+<section id="contact"><div class="w">
+  <div class="contact">
+    <h2>Let's discuss your task</h2>
+    <p class="sub" style="margin:0">Tell us what your organisation does and what you want the AI to take on. We reply within one working day.</p>
+    <div class="mail">khamzinb@gmail.com</div>
+  </div>
+</div></section>
+
+<footer><div class="w"><span>Galymzhan · IP SUN · Astana, Kazakhstan · 2026</span><span><a href="/">AI mentor</a> · <a href="https://supremelab.org" target="_blank" rel="noopener">SupremeLab</a></span></div></footer>
+</body>
+</html>
